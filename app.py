@@ -3,7 +3,7 @@ from flask_cors import CORS
 import requests
 
 # Your deployed Apps Script Web App URL (ends with /exec)
-GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz2TesXQJKGEZNo6yhWPKquODzvb3mz2PZCbQw2-dR8LDxRdDlMPuXWXfanxPXVu5ASmw/exec"
+GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbys9YY1oq9Sgxjiw-Nw3a3S2nrDAax4lhe8dVC3jrVsS9v1ufgWtTn2_B1SkAXk5Z6x2Q/exec"
 
 app = Flask(__name__)
 CORS(app)  # allow all origins; you can restrict later
@@ -142,6 +142,15 @@ def api_assign_task():
         "assignTo": data.get("assignTo", ""),   # assignee
     }
     return forward_post_to_gas(payload)
+
+# ---------- ADMIN: TASK TOTALS FROM TASKS SHEET ----------
+@app.get("/api/task-totals")
+def get_task_totals():
+    params = {
+        "action": "getTaskTotals"
+    }
+    return forward_get_to_gas(params)
+
 
 
 if __name__ == "__main__":
